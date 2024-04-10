@@ -4,11 +4,38 @@ green="\e[32m"
 red="\e[31m"
 reset="\e[0m"
 
+make re
 cd ..
 make re
 clear
 
-echo -e "\tTESTER\n"
+echo -e "\t
+██████╗  █████╗  ██████╗ ██████╗ ██████╗  ██████╗ ███╗   ██╗ █████╗ ████████╗ ██████╗ ██████╗ 
+██╔══██╗██╔══██╗██╔════╝██╔════╝██╔═══██╗██╔═══██╗████╗  ██║██╔══██╗╚══██╔══╝██╔═══██╗██╔══██╗
+██████╔╝███████║██║     ██║     ██║   ██║██║   ██║██╔██╗ ██║███████║   ██║   ██║   ██║██████╔╝
+██╔══██╗██╔══██║██║     ██║     ██║   ██║██║   ██║██║╚██╗██║██╔══██║   ██║   ██║   ██║██╔══██╗
+██║  ██║██║  ██║╚██████╗╚██████╗╚██████╔╝╚██████╔╝██║ ╚████║██║  ██║   ██║   ╚██████╔╝██║  ██║
+╚═╝  ╚═╝╚═╝  ╚═╝ ╚═════╝ ╚═════╝ ╚═════╝  ╚═════╝ ╚═╝  ╚═══╝╚═╝  ╚═╝   ╚═╝    ╚═════╝ ╚═╝  ╚═╝
+\n"
+
+if ! [ -e ./push_swap ]; then
+    echo "Le fichier ./push_swap n'existe pas."
+    exit 1
+fi
+
+if ! [ -f ./push_swap ]; then
+    echo "Le fichier ./push_swap n'est pas un fichier régulier."
+    exit 1
+fi
+
+if ! [ -x ./push_swap ]; then
+    echo "Le fichier ./push_swap n'est pas exécutable."
+    exit 1
+fi
+
+#########
+#
+# NORM
 
 norm_check=$(norminette | awk -F ': ' '{if ($2 == "OK!") {norm[NR]=0} else {norm[NR]=1}} 
 END {for (i=1; i<=NR; i++) {total+=norm[i]}; printf "%d", total}')
@@ -20,6 +47,10 @@ elif [ "$norm_check" -gt 0 ]; then
 else
 	echo -e "\tError\n"
 fi
+
+#########
+#
+# TEST 1
 
 error_check=0
 
@@ -51,6 +82,10 @@ elif [ "$error_check" == 1 ]; then
 	echo -e "\tTest 1: $red[KO]$reset"
 fi
 
+#########
+#
+# TEST 2
+
 sorted_check=0
 
 if [ "$(./push_swap 42)" != "" ]; then
@@ -69,4 +104,30 @@ if [ "$sorted_check" == 0 ]; then
 	echo -e "\tTest 2: $green[OK]$reset"
 elif [ "$sorted_check" == 1 ]; then
 	echo -e "\tTest 2: $red[KO]$reset"
+fi
+
+#########
+#
+# TEST 3
+
+cd raccoonator
+
+if [ "$(../push_swap 2 1 0 | wc -l)" -lt 4 ] && 
+[ $(../push_swap 2 1 0 | ./checker 2 1 0) == "OK" ]; then
+	echo -e "\tTest 3: $green[OK]$reset"
+elif [ "$(../push_swap 2 1 0 | wc -l)" -gt 4 ] || 
+[ $(../push_swap 2 1 0 | ./checker 2 1 0) == "KO" ]; then
+	echo -e "\tTest 3: $red[KO]$reset"
+fi
+
+#########
+#
+# TEST 4
+
+if [ "$(../push_swap 123 456 58 | wc -l)" -lt 4 ] && 
+[ $(../push_swap 123 456 58 | ./checker 123 456 58) == "OK" ]; then
+	echo -e "\tTest 4: $green[OK]$reset"
+elif [ "$(../push_swap 123 456 58 | wc -l)" -gt 4 ] || 
+[ $(../push_swap 123 456 58 | ./checker 123 456 58) == "KO" ]; then
+	echo -e "\tTest 4: $red[KO]$reset"
 fi
