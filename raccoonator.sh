@@ -150,8 +150,8 @@ min=-100000
 max=100000
 declare one_hundred_numbers
 
-while [ $(echo "$one_hundred_numbers" | wc -l) != 100 ]; do
-	one_hundred_numbers=$(seq $min 10 $max | shuf -n 100 | uniq)
+while [ $(echo "$one_hundred_numbers" | wc -w) != 100 ]; do
+	one_hundred_numbers=$(seq $min 10 $max | shuf -n 100 | uniq | tr '\n' ' ')
 done
 
 echo -e "\n\tPush_swap - Middle version\n"
@@ -202,8 +202,8 @@ fi
 
 declare five_hundred_numbers
 
-while [ $(echo "$five_hundred_numbers" | wc -l) != 500 ]; do
-	five_hundred_numbers=$(seq $min 10 $max | shuf -n 500 | uniq)
+while [ $(echo "$five_hundred_numbers" | wc -w) != 500 ]; do
+	five_hundred_numbers=$(seq $min 10 $max | shuf -n 500 | uniq | tr '\n ' ' ')
 done
 
 echo -e "\n\tPush_swap - Advanced version\n"
@@ -252,6 +252,8 @@ fi
 #
 # Summary
 
-read -p $'\n\tPress Enter to see the summary\n'
-echo -e "\tThe list of 100 numbers used:\n$one_hundred_numbers"
-echo -e "\tThe list of 500 numbers used:\n$five_hundred_numbers"
+sleep 2
+
+echo -e "\n\tSummary" 
+echo -e "\n\tThe list of 100 numbers used:\n\n$one_hundred_numbers"
+echo -e "\n\tThe list of 500 numbers used:\n\n$five_hundred_numbers"
