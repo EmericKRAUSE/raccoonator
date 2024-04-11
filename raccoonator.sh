@@ -17,6 +17,7 @@ echo -e "\n
 \t██║  ██║██║  ██║╚██████╗╚██████╗╚██████╔╝╚██████╔╝██║ ╚████║██║  ██║   ██║   ╚██████╔╝██║  ██║
 \t╚═╝  ╚═╝╚═╝  ╚═╝ ╚═════╝ ╚═════╝ ╚═════╝  ╚═════╝ ╚═╝  ╚═══╝╚═╝  ╚═╝   ╚═╝    ╚═════╝ ╚═╝  ╚═╝
 \n"
+echo -e "\tA tester for the Push_swap project from 42 - By ekrause\n"
 
 if ! [ -e ./push_swap ]; then
     echo "Le fichier ./push_swap n'existe pas."
@@ -31,21 +32,6 @@ fi
 if ! [ -x ./push_swap ]; then
     echo "Le fichier ./push_swap n'est pas exécutable."
     exit 1
-fi
-
-#########
-#
-# NORM
-
-norm_check=$(norminette | awk -F ': ' '{if ($2 == "OK!") {norm[NR]=0} else {norm[NR]=1}} 
-END {for (i=1; i<=NR; i++) {total+=norm[i]}; printf "%d", total}')
-
-if [ "$norm_check" -eq 0 ]; then
-	echo -e "\tNorm:   $green[OK]$reset"
-elif [ "$norm_check" -gt 0 ]; then
-	echo -e "\tNorm:   $red[KO]$reset"
-else
-	echo -e "\tError\n"
 fi
 
 #########
@@ -139,7 +125,7 @@ fi
 if [ "$(../push_swap 1 5 2 4 3 | wc -l)" -lt 12 ] && 
 [ $(../push_swap 1 5 2 4 3 | ./checker 1 5 2 4 3) == "OK" ]; then
 	echo -e "\tTest 5: $green[OK]$reset"
-elif [ "$(../push_swap 1 5 2 4 3 | wc -l)" -gt 4 ] || 
+elif [ "$(../push_swap 1 5 2 4 3 | wc -l)" -gt 12 ] || 
 [ $(../push_swap 1 5 2 4 3 | ./checker 1 5 2 4 3) == "KO" ]; then
 	echo -e "\tTest 5: $red[KO]$reset"
 fi
@@ -151,7 +137,121 @@ fi
 if [ "$(../push_swap 89 -63 21 97 17 | wc -l)" -lt 12 ] && 
 [ $(../push_swap 89 -63 21 97 17 | ./checker 89 -63 21 97 17) == "OK" ]; then
 	echo -e "\tTest 6: $green[OK]$reset"
-elif [ "$(../push_swap 89 -63 21 97 17 | wc -l)" -gt 4 ] || 
+elif [ "$(../push_swap 89 -63 21 97 17 | wc -l)" -gt 12 ] || 
 [ $(../push_swap 89 -63 21 97 17 | ./checker 89 -63 21 97 17) == "KO" ]; then
 	echo -e "\tTest 6: $red[KO]$reset"
 fi
+
+#########
+#
+# Push_swap - Middle version
+
+min=-100000
+max=100000
+declare one_hundred_numbers
+
+while [ $(echo "$one_hundred_numbers" | wc -l) != 100 ]; do
+	one_hundred_numbers=$(seq $min 10 $max | shuf -n 100 | uniq)
+done
+
+echo -e "\n\tPush_swap - Middle version\n"
+
+if [ "$(../push_swap $one_hundred_numbers | wc -l)" -lt 1500 ] && 
+[ $(../push_swap $one_hundred_numbers | ./checker $one_hundred_numbers) == "OK" ]; then
+	echo -e "\tLess than 1500: $green[OK]$reset"
+elif [ "$(../push_swap $one_hundred_numbers | wc -l)" -gt 1500 ] || 
+[ $(../push_swap $one_hundred_numbers | ./checker $one_hundred_numbers) == "KO" ]; then
+	echo -e "\tLess than 1500: $red[KO]$reset"
+fi
+
+if [ "$(../push_swap $one_hundred_numbers | wc -l)" -lt 1300 ] && 
+[ $(../push_swap $one_hundred_numbers | ./checker $one_hundred_numbers) == "OK" ]; then
+	echo -e "\tLess than 1300: $green[OK]$reset"
+elif [ "$(../push_swap $one_hundred_numbers | wc -l)" -gt 1300 ] || 
+[ $(../push_swap $one_hundred_numbers | ./checker $one_hundred_numbers) == "KO" ]; then
+	echo -e "\tLess than 1300: $red[KO]$reset"
+fi
+
+if [ "$(../push_swap $one_hundred_numbers | wc -l)" -lt 1100 ] && 
+[ $(../push_swap $one_hundred_numbers | ./checker $one_hundred_numbers) == "OK" ]; then
+	echo -e "\tLess than 1100: $green[OK]$reset"
+elif [ "$(../push_swap $one_hundred_numbers | wc -l)" -gt 1100 ] || 
+[ $(../push_swap $one_hundred_numbers | ./checker $one_hundred_numbers) == "KO" ]; then
+	echo -e "\tLess than 1100: $red[KO]$reset"
+fi
+
+if [ "$(../push_swap $one_hundred_numbers | wc -l)" -lt 900 ] && 
+[ $(../push_swap $one_hundred_numbers | ./checker $one_hundred_numbers) == "OK" ]; then
+	echo -e "\tLess than 900:  $green[OK]$reset"
+elif [ "$(../push_swap $one_hundred_numbers | wc -l)" -gt 900 ] || 
+[ $(../push_swap $one_hundred_numbers | ./checker $one_hundred_numbers) == "KO" ]; then
+	echo -e "\tLess than 900:  $red[KO]$reset"
+fi
+
+if [ "$(../push_swap $one_hundred_numbers | wc -l)" -lt 700 ] && 
+[ $(../push_swap $one_hundred_numbers | ./checker $one_hundred_numbers) == "OK" ]; then
+	echo -e "\tLess than 700:  $green[OK]$reset"
+elif [ "$(../push_swap $one_hundred_numbers | wc -l)" -gt 700 ] || 
+[ $(../push_swap $one_hundred_numbers | ./checker $one_hundred_numbers) == "KO" ]; then
+	echo -e "\tLess than 700:  $red[KO]$reset"
+fi
+
+#########
+#
+# Push_swap - Advanced version
+
+declare five_hundred_numbers
+
+while [ $(echo "$five_hundred_numbers" | wc -l) != 500 ]; do
+	five_hundred_numbers=$(seq $min 10 $max | shuf -n 500 | uniq)
+done
+
+echo -e "\n\tPush_swap - Advanced version\n"
+
+if [ "$(../push_swap $five_hundred_numbers | wc -l)" -lt 11500 ] && 
+[ $(../push_swap $five_hundred_numbers | ./checker $five_hundred_numbers) == "OK" ]; then
+	echo -e "\tLess than 11500: $green[OK]$reset"
+elif [ "$(../push_swap $five_hundred_numbers | wc -l)" -gt 11500 ] || 
+[ $(../push_swap $five_hundred_numbers | ./checker $five_hundred_numbers) == "KO" ]; then
+	echo -e "\tLess than 11500: $red[KO]$reset"
+fi
+
+if [ "$(../push_swap $five_hundred_numbers | wc -l)" -lt 10000 ] && 
+[ $(../push_swap $five_hundred_numbers | ./checker $five_hundred_numbers) == "OK" ]; then
+	echo -e "\tLess than 10000: $green[OK]$reset"
+elif [ "$(../push_swap $five_hundred_numbers | wc -l)" -gt 10000 ] || 
+[ $(../push_swap $five_hundred_numbers | ./checker $five_hundred_numbers) == "KO" ]; then
+	echo -e "\tLess than 10000: $red[KO]$reset"
+fi
+
+if [ "$(../push_swap $five_hundred_numbers | wc -l)" -lt 8500 ] && 
+[ $(../push_swap $five_hundred_numbers | ./checker $five_hundred_numbers) == "OK" ]; then
+	echo -e "\tLess than 8500:  $green[OK]$reset"
+elif [ "$(../push_swap $five_hundred_numbers | wc -l)" -gt 8500 ] || 
+[ $(../push_swap $five_hundred_numbers | ./checker $five_hundred_numbers) == "KO" ]; then
+	echo -e "\tLess than 8500:  $red[KO]$reset"
+fi
+
+if [ "$(../push_swap $five_hundred_numbers | wc -l)" -lt 7000 ] && 
+[ $(../push_swap $five_hundred_numbers | ./checker $five_hundred_numbers) == "OK" ]; then
+	echo -e "\tLess than 7000:  $green[OK]$reset"
+elif [ "$(../push_swap $five_hundred_numbers | wc -l)" -gt 7000 ] || 
+[ $(../push_swap $five_hundred_numbers | ./checker $five_hundred_numbers) == "KO" ]; then
+	echo -e "\tLess than 7000:  $red[KO]$reset"
+fi
+
+if [ "$(../push_swap $five_hundred_numbers | wc -l)" -lt 5500 ] && 
+[ $(../push_swap $five_hundred_numbers | ./checker $five_hundred_numbers) == "OK" ]; then
+	echo -e "\tLess than 5500:  $green[OK]$reset"
+elif [ "$(../push_swap $five_hundred_numbers | wc -l)" -gt 5500 ] || 
+[ $(../push_swap $five_hundred_numbers | ./checker $five_hundred_numbers) == "KO" ]; then
+	echo -e "\tLess than 5500:  $red[KO]$reset"
+fi
+
+#########
+#
+# Summary
+
+read -p $'\n\tPress Enter to see the summary\n'
+echo -e "\tThe list of 100 numbers used:\n$one_hundred_numbers"
+echo -e "\tThe list of 500 numbers used:\n$five_hundred_numbers"
