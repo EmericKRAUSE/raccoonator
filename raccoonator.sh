@@ -118,11 +118,19 @@ fi
 #
 # TEST 4
 
-if [ "$(../push_swap 123 456 -58 | wc -l)" -lt 4 ] && 
-[ $(../push_swap 123 456 -58 | ./checker 123 456 -58) == "OK" ]; then
+min=-100000
+max=100000
+declare three_numbers
+
+while [ $(echo "$three_numbers" | wc -w) != 3 ]; do
+	three_numbers=$(seq $min 10 $max | shuf -n 3 | uniq | tr '\n' ' ')
+done
+
+if [ "$(../push_swap $three_numbers | wc -l)" -lt 4 ] && 
+[ $(../push_swap $three_numbers | ./checker $three_numbers) == "OK" ]; then
 	echo -e "\tTest 4: $green[OK]$reset"
-elif [ "$(../push_swap 123 456 -58 | wc -l)" -gt 3 ] || 
-[ $(../push_swap 123 456 -58 | ./checker 123 456 -58) == "KO" ]; then
+elif [ "$(../push_swap $three_numbers | wc -l)" -gt 3 ] || 
+[ $(../push_swap $three_numbers | ./checker $three_numbers) == "KO" ]; then
 	echo -e "\tTest 4: $red[KO]$reset"
 else
 	echo -e "\tTest 4: $yellow[ERROR]$reset"
@@ -146,11 +154,17 @@ fi
 #
 # TEST 6
 
-if [ "$(../push_swap 89 -63 21 97 17 | wc -l)" -lt 12 ] && 
-[ $(../push_swap 89 -63 21 97 17 | ./checker 89 -63 21 97 17) == "OK" ]; then
+declare five_numbers
+
+while [ $(echo "$five_numbers" | wc -w) != 5 ]; do
+	five_numbers=$(seq $min 10 $max | shuf -n 5 | uniq | tr '\n' ' ')
+done
+
+if [ "$(../push_swap $five_numbers | wc -l)" -lt 12 ] && 
+[ $(../push_swap $five_numbers | ./checker $five_numbers) == "OK" ]; then
 	echo -e "\tTest 6: $green[OK]$reset"
-elif [ "$(../push_swap 89 -63 21 97 17 | wc -l)" -gt 11 ] || 
-[ $(../push_swap 89 -63 21 97 17 | ./checker 89 -63 21 97 17) == "KO" ]; then
+elif [ "$(../push_swap $five_numbers | wc -l)" -gt 11 ] || 
+[ $(../push_swap $five_numbers | ./checker $five_numbers) == "KO" ]; then
 	echo -e "\tTest 6: $red[KO]$reset"
 else
 	echo -e "\tTest 6: $yellow[ERROR]$reset"
@@ -160,8 +174,6 @@ fi
 #
 # Push_swap - Middle version
 
-min=-100000
-max=100000
 declare one_hundred_numbers
 
 while [ $(echo "$one_hundred_numbers" | wc -w) != 100 ]; do
@@ -288,26 +300,27 @@ fi
 
 declare input
 
-while [ "$input" != 'x' ]; do
-	echo -e "
-	Type:
-	'${cyan}x${reset}' to exit
-	'${cyan}s${reset}' to see the summary
-	'${cyan}n${reset}' to see the numbers that have been used"
-	read -s input
-	if [ "$input" == "x" ]; then
-		exit 1
-	elif [ "$input" == "s" ]; then
-		echo -e "\n\tTest 1: error handling"
-		echo -e "\tTest 2: tests with sorted numbers"
-		echo -e "\tTest 3: tests with 3 given values"
-		echo -e "\tTest 4: tests with 3 random values"
-		echo -e "\tTest 5: tests with 5 given values"
-		echo -e "\tTest 6: tests with 5 random values"
-		echo -e "\tPush_swap - Middle version : tests with 100 random numbers"
-		echo -e "\tPush_swap - Advanced version : tests with 500 random numbers"
-	elif [ "$input" == "n" ]; then
-		echo -e "\n\tThe list of 100 numbers used:\n\n$one_hundred_numbers"
-		echo -e "\n\tThe list of 500 numbers used:\n\n$five_hundred_numbers"
-	fi
-done
+echo -e "\n\ttype
+\t'${cyan}x${reset}' to exit
+\t'${cyan}s${reset}' to ses the summary"
+read input
+
+if [ "$input" == "x" ]; then
+	exit 1
+elif [ "$input" == "s" ]; then
+	echo -e "\n\tTest 1: ${cyan}error handling${reset}
+	Test 2: ${cyan}tests with sorted numbers${reset}
+	Test 3: ${cyan}tests with 3 given values${reset}
+	Test 4: ${cyan}tests with 3 random values${reset}	
+	Test 5: ${cyan}tests with 5 given values${reset}
+	Test 6: ${cyan}tests with 5 random values${reset}
+	Push_swap - Middle version : ${cyan}tests with 100 random numbers${reset}
+	Push_swap - Advanced version : ${cyan}tests with 500 random numbers${reset}"
+fi
+
+echo -e "\n${cyan}The list of 3 numbers that have been used used:${reset}\n\n$three_numbers
+\n${cyan}The list of 5 numbers that have been used used:${reset}\n\n$five_numbers
+\n${cyan}The list of 100 numbers that have been used used:${reset}\n\n$one_hundred_numbers
+\n${cyan}The list of 500 numbers that have been used used:${reset}\n\n$five_hundred_numbers" >> numbers.txt
+
+echo -e "\n\tto see the numbers that have been used: ${cyan}cat numbers.txt${reset}\n"
