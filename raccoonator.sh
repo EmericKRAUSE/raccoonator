@@ -123,7 +123,7 @@ max=100000
 declare three_numbers
 
 while [ $(echo "$three_numbers" | wc -w) != 3 ]; do
-	three_numbers=$(seq $min 10 $max | shuf -n 3 | uniq | tr '\n' ' ')
+	three_numbers=$(seq $min 1 $max | shuf -n 3 | uniq | tr '\n' ' ')
 done
 
 if [ "$(../push_swap $three_numbers | wc -l)" -lt 4 ] && 
@@ -157,7 +157,7 @@ fi
 declare five_numbers
 
 while [ $(echo "$five_numbers" | wc -w) != 5 ]; do
-	five_numbers=$(seq $min 10 $max | shuf -n 5 | uniq | tr '\n' ' ')
+	five_numbers=$(seq $min 1 $max | shuf -n 5 | uniq | tr '\n' ' ')
 done
 
 if [ "$(../push_swap $five_numbers | wc -l)" -lt 12 ] && 
@@ -177,7 +177,7 @@ fi
 declare one_hundred_numbers
 
 while [ $(echo "$one_hundred_numbers" | wc -w) != 100 ]; do
-	one_hundred_numbers=$(seq $min 10 $max | shuf -n 100 | uniq | tr '\n' ' ')
+	one_hundred_numbers=$(seq $min 1 $max | shuf -n 100 | uniq | tr '\n' ' ')
 done
 
 echo -e "\n\tPush_swap - Middle version\n"
@@ -239,7 +239,7 @@ fi
 declare five_hundred_numbers
 
 while [ $(echo "$five_hundred_numbers" | wc -w) != 500 ]; do
-	five_hundred_numbers=$(seq $min 10 $max | shuf -n 500 | uniq | tr '\n ' ' ')
+	five_hundred_numbers=$(seq $min 1 $max | shuf -n 500 | uniq | tr '\n ' ' ')
 done
 
 echo -e "\n\tPush_swap - Advanced version\n"
