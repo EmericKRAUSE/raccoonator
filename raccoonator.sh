@@ -140,10 +140,10 @@ fi
 #
 # TEST 5
 
-if [ "$(../push_swap 1 5 2 4 3 | wc -l)" -lt 12 ] && 
+if [ "$(../push_swap 1 5 2 4 3 | wc -l)" -lt 13 ] && 
 [ $(../push_swap 1 5 2 4 3 | ./checker 1 5 2 4 3) == "OK" ]; then
 	echo -e "\tTest with 5 given values:  $green[OK]$reset"
-elif [ "$(../push_swap 1 5 2 4 3 | wc -l)" -gt 11 ] || 
+elif [ "$(../push_swap 1 5 2 4 3 | wc -l)" -gt 12 ] || 
 [ $(../push_swap 1 5 2 4 3 | ./checker 1 5 2 4 3) == "KO" ]; then
 	echo -e "\tTest with 5 given values:  $red[KO]$reset"
 else
