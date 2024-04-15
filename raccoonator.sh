@@ -65,11 +65,11 @@ elif [ "$(./push_swap)" != "" ]; then
 fi
 
 if [ "$error_check" == 0 ]; then
-	echo -e "\tTest 1: $green[OK]$reset"
+	echo -e "\tError handling: $green[OK]$reset"
 elif [ "$error_check" == 1 ]; then
-	echo -e "\tTest 1: $red[KO]$reset"
+	echo -e "\tError handling: $red[KO]$reset"
 else
-	echo -e "\tTest 1: $yellow[ERROR]$reset"
+	echo -e "\tError handling: $yellow[ERROR]$reset"
 fi
 
 #########
@@ -91,11 +91,11 @@ elif [ "$(./push_swap 8 12 14 17 24 94 128 247)" != "" ]; then
 fi
 
 if [ "$sorted_check" == 0 ]; then
-	echo -e "\tTest 2: $green[OK]$reset"
+	echo -e "\tTest with sorted numbers:  $green[OK]$reset"
 elif [ "$sorted_check" == 1 ]; then
-	echo -e "\tTest 2: $red[KO]$reset"
+	echo -e "\tTest with sorted numbers:  $red[KO]$reset"
 else
-	echo -e "\tTest 2: $yellow[ERROR]$reset"
+	echo -e "\tTest with sorted numbers:  $yellow[ERROR]$reset"
 fi
 
 #########
@@ -106,12 +106,12 @@ cd raccoonator
 
 if [ "$(../push_swap 2 1 0 | wc -l)" -lt 4 ] && 
 [ $(../push_swap 2 1 0 | ./checker 2 1 0) == "OK" ]; then
-	echo -e "\tTest 3: $green[OK]$reset"
+	echo -e "\tTest with 3 given values:  $green[OK]$reset"
 elif [ "$(../push_swap 2 1 0 | wc -l)" -gt 3 ] || 
 [ $(../push_swap 2 1 0 | ./checker 2 1 0) == "KO" ]; then
-	echo -e "\tTest 3: $red[KO]$reset"
+	echo -e "\tTest with 3 given values:  $red[KO]$reset"
 else
-	echo -e "\tTest 3: $yellow[ERROR]$reset"
+	echo -e "\tTest with 3 given values:  $yellow[ERROR]$reset"
 fi
 
 #########
@@ -128,12 +128,12 @@ done
 
 if [ "$(../push_swap $three_numbers | wc -l)" -lt 4 ] && 
 [ $(../push_swap $three_numbers | ./checker $three_numbers) == "OK" ]; then
-	echo -e "\tTest 4: $green[OK]$reset"
+	echo -e "\tTest with 3 random values: $green[OK]$reset"
 elif [ "$(../push_swap $three_numbers | wc -l)" -gt 3 ] || 
 [ $(../push_swap $three_numbers | ./checker $three_numbers) == "KO" ]; then
-	echo -e "\tTest 4: $red[KO]$reset"
+	echo -e "\tTest with 3 random values: $red[KO]$reset"
 else
-	echo -e "\tTest 4: $yellow[ERROR]$reset"
+	echo -e "\tTest with 3 random values: $yellow[ERROR]$reset"
 fi
 
 #########
@@ -142,12 +142,12 @@ fi
 
 if [ "$(../push_swap 1 5 2 4 3 | wc -l)" -lt 12 ] && 
 [ $(../push_swap 1 5 2 4 3 | ./checker 1 5 2 4 3) == "OK" ]; then
-	echo -e "\tTest 5: $green[OK]$reset"
+	echo -e "\tTest with 5 given values:  $green[OK]$reset"
 elif [ "$(../push_swap 1 5 2 4 3 | wc -l)" -gt 11 ] || 
 [ $(../push_swap 1 5 2 4 3 | ./checker 1 5 2 4 3) == "KO" ]; then
-	echo -e "\tTest 5: $red[KO]$reset"
+	echo -e "\tTest with 5 given values:  $red[KO]$reset"
 else
-	echo -e "\tTest 5: $yellow[ERROR]$reset"
+	echo -e "\tTest with 5 given values:  $yellow[ERROR]$reset"
 fi
 
 #########
@@ -162,17 +162,17 @@ done
 
 if [ "$(../push_swap $five_numbers | wc -l)" -lt 12 ] && 
 [ $(../push_swap $five_numbers | ./checker $five_numbers) == "OK" ]; then
-	echo -e "\tTest 6: $green[OK]$reset"
+	echo -e "\tTest with 5 random values: $green[OK]$reset"
 elif [ "$(../push_swap $five_numbers | wc -l)" -gt 11 ] || 
 [ $(../push_swap $five_numbers | ./checker $five_numbers) == "KO" ]; then
-	echo -e "\tTest 6: $red[KO]$reset"
+	echo -e "\tTest with 5 random values: $red[KO]$reset"
 else
-	echo -e "\tTest 6: $yellow[ERROR]$reset"
+	echo -e "\tTest with 5 random values: $yellow[ERROR]$reset"
 fi
 
 #########
 #
-# Push_swap - Middle version
+# Push_swap - Middle version (100 random numbers)
 
 declare one_hundred_numbers
 
@@ -180,7 +180,7 @@ while [ $(echo "$one_hundred_numbers" | wc -w) != 100 ]; do
 	one_hundred_numbers=$(seq $min 1 $max | shuf -n 100 | uniq | tr '\n' ' ')
 done
 
-echo -e "\n\tPush_swap - Middle version\n"
+echo -e "\n\tPush_swap - Middle version (100 random numbers)\n"
 
 if [ "$(../push_swap $one_hundred_numbers | wc -l)" -lt 1500 ] && 
 [ $(../push_swap $one_hundred_numbers | ./checker $one_hundred_numbers) == "OK" ]; then
@@ -234,7 +234,7 @@ fi
 
 #########
 #
-# Push_swap - Advanced version
+# Push_swap - Advanced version (500 random numbers)
 
 declare five_hundred_numbers
 
@@ -242,7 +242,7 @@ while [ $(echo "$five_hundred_numbers" | wc -w) != 500 ]; do
 	five_hundred_numbers=$(seq $min 1 $max | shuf -n 500 | uniq | tr '\n ' ' ')
 done
 
-echo -e "\n\tPush_swap - Advanced version\n"
+echo -e "\n\tPush_swap - Advanced version (500 random numbers)\n"
 
 if [ "$(../push_swap $five_hundred_numbers | wc -l)" -lt 11500 ] && 
 [ $(../push_swap $five_hundred_numbers | ./checker $five_hundred_numbers) == "OK" ]; then
@@ -296,27 +296,32 @@ fi
 
 #########
 #
-# Summary
+# Additional tests
 
-declare input
+echo -e "\n\tAdditional tests\n"
 
-echo -e "\n\ttype
-\t'${cyan}x${reset}' to exit
-\t'${cyan}s${reset}' to ses the summary"
-read input
-
-if [ "$input" == "x" ]; then
-	exit 1
-elif [ "$input" == "s" ]; then
-	echo -e "\n\tTest 1: ${cyan}error handling${reset}
-	Test 2: ${cyan}tests with sorted numbers${reset}
-	Test 3: ${cyan}tests with 3 given values${reset}
-	Test 4: ${cyan}tests with 3 random values${reset}	
-	Test 5: ${cyan}tests with 5 given values${reset}
-	Test 6: ${cyan}tests with 5 random values${reset}
-	Push_swap - Middle version : ${cyan}tests with 100 random numbers${reset}
-	Push_swap - Advanced version : ${cyan}tests with 500 random numbers${reset}"
+if [ $(../push_swap 0 -0 1) == "Error" ]; then
+	echo -e "\tZero & minus zero: $green[OK]$reset"
+else
+	echo -e "\tZero & minus zero: $red[KO]$reset"
 fi
+
+if [ $(../push_swap 9 8 2 2147483647 | ./checker 9 8 2 2147483647 == "OK")  ]; then
+	echo -e "\tMax int: $green[OK]$reset"
+else
+	echo -e "\tMax int: $red[KO]$reset"
+fi
+
+if [ $(../push_swap 9 8 2 -2147483648 | ./checker 9 8 2 -2147483648 == "OK")  ]; then
+	echo -e "\tMin int: $green[OK]$reset"
+else
+	echo -e "\tMin int: $red[KO]$reset"
+fi
+
+
+#########
+#
+# Summary
 
 echo -e "\n${cyan}The list of 3 numbers that have been used used:${reset}\n\n$three_numbers
 \n${cyan}The list of 5 numbers that have been used used:${reset}\n\n$five_numbers
